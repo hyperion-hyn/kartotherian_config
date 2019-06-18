@@ -18,7 +18,6 @@ logging.basicConfig(level=logging.INFO)
 
 class TilesLayer:
     BASEMAP = 'basemap'
-    POI = 'poi'
 
 def _execute_sql(ctx, sql, db=None, additional_options=""):
     query = f'psql -Xq -h {ctx.pg.host} -p {ctx.pg.port} -U {ctx.pg.user} -c "{sql}" {additional_options}'
@@ -145,10 +144,6 @@ def _run_imposm_import(ctx, mapping_filename, tileset_name):
 def load_basemap(ctx):
     _run_imposm_import(ctx, 'generated_mapping_base.yaml', TilesLayer.BASEMAP)
 
-@task
-def load_poi(ctx):
-    _run_imposm_import(ctx, 'generated_mapping_poi.yaml', TilesLayer.POI)
-
 
 
 def _run_sql_script(ctx, script_name):
@@ -265,6 +260,60 @@ def import_border(ctx):
 
 
 @task
+def import_china_border(ctx):
+    logging.info("importing the china borders in postgres")
+
+    target_file = f"{ctx.data_dir}/china_boundary_linestring.geojson.gz"
+    if not os.path.isfile(target_file):
+        ctx.run(
+            f"wget --progress=dot:giga -P {ctx.data_dir} https://s3-ap-southeast-1.amazonaws.com/hyn.maptiles/china_boundary.geojson.gz \
+    && gzip -d {ctx.data_dir}/china_boundary_linestring.geojson.gz"
+        )
+
+    pg_conn = _get_pg_conn(ctx)
+    ctx.run(
+        f'PGCLIENTENCODING=UTF8 ogr2ogr \
+    -f Postgresql \
+    -s_srs EPSG:4326 \
+    -t_srs EPSG:3857 \
+    PG:"{pg_conn}" \
+    {ctx.data_dir}/china_boundary_linestring.geojson \
+    -overwrite \
+    -lco GEOMETRY_NAME=geometry \
+    -nln "china_boundary_linestring"'
+    )
+
+    # generalized tables
+    create_china_border_gen(ctx, "china_boundary_linestring", "china_boundary_linestring_gen1", 600, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen1", "china_boundary_linestring_gen2", 1200, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen2", "china_boundary_linestring_gen3", 2400, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen3", "china_boundary_linestring_gen4", 4800, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen4", "china_boundary_linestring_gen5", 9600, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen5", "china_boundary_linestring_gen6", 19200, 2)
+    create_china_border_gen(ctx, "china_boundary_linestring_gen6", "china_boundary_linestring_gen7", 38400, 2)
+
+
+@task
+def create_china_border_gen(ctx, source, target, tolerance, max_admin_level):
+    logging.info(f"Generalize {target} with tolerance {tolerance} from {source}")
+    _execute_sql(
+        ctx,
+        f"CREATE TABLE {target} AS SELECT ST_Simplify(geometry, {tolerance}) AS geometry, id, admin_level, dividing_line, disputed, maritime FROM {source} WHERE admin_level <= {max_admin_level};",
+        db=ctx.pg.import_database,
+    )
+    _execute_sql(
+        ctx,
+        f"CREATE INDEX ON {target} USING gist (geometry);",
+        db=ctx.pg.import_database,
+    )
+    _execute_sql(
+        ctx,
+        f"ANALYZE {target};",
+        db=ctx.pg.import_database,
+    )
+
+
+@task
 def import_wikidata(ctx):
     """
     import wikidata (for some translations)
@@ -286,7 +335,6 @@ def run_post_sql_scripts(ctx):
     """
     logging.info("running postsql scripts")
     _run_sql_script(ctx, "generated_base.sql")
-    _run_sql_script(ctx, "generated_poi.sql")
 
 
 @task
@@ -294,7 +342,6 @@ def load_osm(ctx):
     if ctx.osm.url:
         get_osm_data(ctx)
     load_basemap(ctx)
-    load_poi(ctx)
     run_sql_script(ctx)
 
 
@@ -303,7 +350,8 @@ def load_additional_data(ctx):
     import_natural_earth(ctx)
     import_water_polygon(ctx)
     import_lake(ctx)
-    import_border(ctx)
+    # import_border(ctx)
+    import_china_border(ctx)
     import_wikidata(ctx)
 
 
@@ -381,13 +429,6 @@ def create_tiles_jobs(
                 "storageId": ctx.tiles.base_sources.storage,
             }
         )
-    elif tiles_layer == TilesLayer.POI:
-        params.update(
-            {
-                "generatorId": ctx.tiles.poi_sources.generator,
-                "storageId": ctx.tiles.poi_sources.storage,
-            }
-        )
     else:
         raise Exception("invalid tiles_layer")
 
@@ -449,18 +490,6 @@ def generate_tiles(ctx):
             before_zoom=15,
             check_previous_layer=True,
         )
-        # for the poi, we generate only tiles if we have a base tile on the level 13
-        # Note: we check the level 13 and not 14 because the tilegeneration process is in the background
-        # and we might not have finished all basemap 14th zoom level tiles when starting the poi generation
-        # it's a bit of a trick but works fine
-        create_tiles_jobs(
-            ctx,
-            tiles_layer=TilesLayer.POI,
-            z=14,
-            from_zoom=14,
-            before_zoom=15,
-            check_base_layer_level=13,
-        )
     elif ctx.tiles.x and ctx.tiles.y and ctx.tiles.z:
         logging.info(
             f"generating tiles for {ctx.tiles.x} / {ctx.tiles.y}, z = {ctx.tiles.z}"
@@ -473,15 +502,6 @@ def generate_tiles(ctx):
             z=ctx.tiles.z,
             from_zoom=ctx.tiles.base_from_zoom,
             before_zoom=ctx.tiles.base_before_zoom,
-        )
-        create_tiles_jobs(
-            ctx,
-            tiles_layer=TilesLayer.POI,
-            x=ctx.tiles.x,
-            y=ctx.tiles.y,
-            z=ctx.tiles.z,
-            from_zoom=ctx.tiles.poi_from_zoom,
-            before_zoom=ctx.tiles.poi_before_zoom,
         )
     else:
         logging.info("no parameter given for tile generation, skipping it")

@@ -5,12 +5,38 @@ generalized_tables:
     tolerance: 19.10925707129407}
   aeroway_linestring_gen2: {source: aeroway_linestring_gen1, tolerance: 38.21851414258814}
   aeroway_linestring_gen3: {source: aeroway_linestring_gen2, tolerance: 76.43702828517628}
-  aeroway_polygon_gen1: {source: aeroway_polygon, sql_filter: 'area>power(38.2185141426,2)
+  aeroway_polygon_gen1: {source: aeroway_polygon, sql_filter: 'area>power(38.21851414258814,2)
       AND ST_IsValid(geometry)', tolerance: 19.10925707129407}
-  aeroway_polygon_gen2: {source: aeroway_polygon_gen1, sql_filter: 'area>power(76.4370282852,2)',
+  aeroway_polygon_gen2: {source: aeroway_polygon_gen1, sql_filter: 'area>power(76.43702828517628,2)',
     tolerance: 38.21851414258814}
-  aeroway_polygon_gen3: {source: aeroway_polygon_gen2, sql_filter: 'area>power(152.87405657,2)',
+  aeroway_polygon_gen3: {source: aeroway_polygon_gen2, sql_filter: 'area>power(152.87405657035256,2)',
     tolerance: 76.43702828517628}
+  boundary_linestring_gen1: {source: boundary_linestring, sql_filter: admin_level
+      <= 10, tolerance: 9.554628535647035}
+  boundary_linestring_gen10: {source: boundary_linestring_gen9, sql_filter: admin_level
+      <= 4, tolerance: 4891.969810251282}
+  boundary_linestring_gen11: {source: boundary_linestring_gen10, sql_filter: admin_level
+      <= 4, tolerance: 9783.939620502564}
+  boundary_linestring_gen12: {source: boundary_linestring_gen11, sql_filter: admin_level
+      <= 4, tolerance: 19567.87924100513}
+  boundary_linestring_gen13: {source: boundary_linestring_gen12, sql_filter: admin_level
+      <= 2, tolerance: 39135.75848201026}
+  boundary_linestring_gen2: {source: boundary_linestring_gen1, sql_filter: admin_level
+      <= 10, tolerance: 19.10925707129407}
+  boundary_linestring_gen3: {source: boundary_linestring_gen2, sql_filter: admin_level
+      <= 8, tolerance: 38.21851414258814}
+  boundary_linestring_gen4: {source: boundary_linestring_gen3, sql_filter: admin_level
+      <= 6, tolerance: 76.43702828517628}
+  boundary_linestring_gen5: {source: boundary_linestring_gen4, sql_filter: admin_level
+      <= 6, tolerance: 152.87405657035256}
+  boundary_linestring_gen6: {source: boundary_linestring_gen5, sql_filter: admin_level
+      <= 6, tolerance: 305.74811314070513}
+  boundary_linestring_gen7: {source: boundary_linestring_gen6, sql_filter: admin_level
+      <= 4, tolerance: 611.4962262814103}
+  boundary_linestring_gen8: {source: boundary_linestring_gen7, sql_filter: admin_level
+      <= 4, tolerance: 1222.9924525628205}
+  boundary_linestring_gen9: {source: boundary_linestring_gen8, sql_filter: admin_level
+      <= 4, tolerance: 2445.984905125641}
   highway_linestring_gen1: {source: highway_linestring, sql_filter: 'highway IN (''motorway'',
       ''trunk'', ''primary'', ''secondary'', ''tertiary'', ''motorway_link'', ''trunk_link'',
       ''primary_link'', ''secondary_link'', ''tertiary_link'') AND NOT is_area AND
@@ -18,45 +44,45 @@ generalized_tables:
   highway_linestring_gen2: {source: highway_linestring_gen1, sql_filter: 'highway
       IN (''motorway'', ''trunk'', ''primary'', ''secondary'', ''motorway_link'',
       ''trunk_link'', ''primary_link'', ''secondary_link'') AND NOT is_area', tolerance: 76.43702828517628}
-  landcover_polygon_gen1: {source: landcover_polygon, sql_filter: 'area>power(152.87405657,2)
+  landcover_polygon_gen1: {source: landcover_polygon, sql_filter: 'area>power(152.87405657035256,2)
       AND ST_IsValid(geometry)', tolerance: 19.10925707129407}
-  landcover_polygon_gen2: {source: landcover_polygon_gen1, sql_filter: 'area>power(305.748113141,2)',
+  landcover_polygon_gen2: {source: landcover_polygon_gen1, sql_filter: 'area>power(305.74811314070513,2)',
     tolerance: 38.21851414258814}
-  landcover_polygon_gen3: {source: landcover_polygon_gen2, sql_filter: 'area>power(611.496226281,2)',
+  landcover_polygon_gen3: {source: landcover_polygon_gen2, sql_filter: 'area>power(611.4962262814103,2)',
     tolerance: 76.43702828517628}
-  landcover_polygon_gen4: {source: landcover_polygon_gen3, sql_filter: 'area>power(611.496226281,2)',
+  landcover_polygon_gen4: {source: landcover_polygon_gen3, sql_filter: 'area>power(611.4962262814103,2)',
     tolerance: 152.87405657035256}
-  landcover_polygon_gen5: {source: landcover_polygon_gen4, sql_filter: 'area>power(1222.99245256,2)',
+  landcover_polygon_gen5: {source: landcover_polygon_gen4, sql_filter: 'area>power(1222.9924525628205,2)',
     tolerance: 305.74811314070513}
-  landcover_polygon_gen6: {source: landcover_polygon_gen5, sql_filter: 'area>power(2445.98490513,2)',
+  landcover_polygon_gen6: {source: landcover_polygon_gen5, sql_filter: 'area>power(2445.984905125641,2)',
     tolerance: 611.4962262814103}
-  landcover_polygon_gen7: {source: landcover_polygon_gen6, sql_filter: 'area>power(4891.96981025,2)',
+  landcover_polygon_gen7: {source: landcover_polygon_gen6, sql_filter: 'area>power(4891.969810251282,2)',
     tolerance: 1222.9924525628205}
-  landuse_polygon_gen1: {source: landuse_polygon, sql_filter: 'area>power(76.4370282852,2)
+  landuse_polygon_gen1: {source: landuse_polygon, sql_filter: 'area>power(76.43702828517628,2)
       AND ST_IsValid(geometry)', tolerance: 19.10925707129407}
-  landuse_polygon_gen2: {source: landuse_polygon_gen1, sql_filter: 'area>power(152.87405657,2)',
+  landuse_polygon_gen2: {source: landuse_polygon_gen1, sql_filter: 'area>power(152.87405657035256,2)',
     tolerance: 38.21851414258814}
-  landuse_polygon_gen3: {source: landuse_polygon_gen2, sql_filter: 'area>power(305.748113141,2)',
+  landuse_polygon_gen3: {source: landuse_polygon_gen2, sql_filter: 'area>power(305.74811314070513,2)',
     tolerance: 76.43702828517628}
-  landuse_polygon_gen4: {source: landuse_polygon_gen3, sql_filter: 'area>power(611.496226281,2)',
+  landuse_polygon_gen4: {source: landuse_polygon_gen3, sql_filter: 'area>power(611.4962262814103,2)',
     tolerance: 152.87405657035256}
-  landuse_polygon_gen5: {source: landuse_polygon_gen4, sql_filter: 'area>power(1222.99245256,2)',
+  landuse_polygon_gen5: {source: landuse_polygon_gen4, sql_filter: 'area>power(1222.9924525628205,2)',
     tolerance: 305.74811314070513}
-  park_polygon_gen1: {source: park_polygon, sql_filter: 'area>power(38.2185141426,2)
+  park_polygon_gen1: {source: park_polygon, sql_filter: 'area>power(38.21851414258814,2)
       AND ST_IsValid(geometry)', tolerance: 19.10925707129407}
-  park_polygon_gen2: {source: park_polygon_gen1, sql_filter: 'area>power(76.4370282852,2)',
+  park_polygon_gen2: {source: park_polygon_gen1, sql_filter: 'area>power(76.43702828517628,2)',
     tolerance: 38.21851414258814}
-  park_polygon_gen3: {source: park_polygon_gen2, sql_filter: 'area>power(152.87405657,2)',
+  park_polygon_gen3: {source: park_polygon_gen2, sql_filter: 'area>power(152.87405657035256,2)',
     tolerance: 76.43702828517628}
-  park_polygon_gen4: {source: park_polygon_gen3, sql_filter: 'area>power(305.748113141,2)',
+  park_polygon_gen4: {source: park_polygon_gen3, sql_filter: 'area>power(305.74811314070513,2)',
     tolerance: 76.43702828517628}
-  park_polygon_gen5: {source: park_polygon_gen4, sql_filter: 'area>power(611.496226281,2)',
+  park_polygon_gen5: {source: park_polygon_gen4, sql_filter: 'area>power(611.4962262814103,2)',
     tolerance: 152.87405657035256}
-  park_polygon_gen6: {source: park_polygon_gen5, sql_filter: 'area>power(1222.99245256,2)',
+  park_polygon_gen6: {source: park_polygon_gen5, sql_filter: 'area>power(1222.9924525628205,2)',
     tolerance: 305.74811314070513}
-  park_polygon_gen7: {source: park_polygon_gen6, sql_filter: 'area>power(2445.98490513,2)',
+  park_polygon_gen7: {source: park_polygon_gen6, sql_filter: 'area>power(2445.984905125641,2)',
     tolerance: 611.4962262814103}
-  park_polygon_gen8: {source: park_polygon_gen7, sql_filter: 'area>power(4891.96981025,2)',
+  park_polygon_gen8: {source: park_polygon_gen7, sql_filter: 'area>power(4891.969810251282,2)',
     tolerance: 611.4962262814103}
   railway_linestring_gen1: {source: railway_linestring, sql_filter: 'railway IN (''rail'',
       ''narrow_gauge'', ''light_rail'') AND service='''' AND ST_IsValid(geometry)',
@@ -68,17 +94,17 @@ generalized_tables:
   shipway_linestring_gen1: {source: shipway_linestring, sql_filter: ST_IsValid(geometry),
     tolerance: 19.10925707129407}
   shipway_linestring_gen2: {source: shipway_linestring_gen1, tolerance: 38.21851414258814}
-  water_polygon_gen1: {source: water_polygon, sql_filter: 'area>power(152.87405657,2)
+  water_polygon_gen1: {source: water_polygon, sql_filter: 'area>power(152.87405657035256,2)
       AND ST_IsValid(geometry)', tolerance: 38.21851414258814}
-  water_polygon_gen2: {source: water_polygon_gen1, sql_filter: 'area>power(305.748113141,2)',
+  water_polygon_gen2: {source: water_polygon_gen1, sql_filter: 'area>power(305.74811314070513,2)',
     tolerance: 76.43702828517628}
-  water_polygon_gen3: {source: water_polygon_gen2, sql_filter: 'area>power(611.496226281,2)',
+  water_polygon_gen3: {source: water_polygon_gen2, sql_filter: 'area>power(611.4962262814103,2)',
     tolerance: 152.87405657035256}
-  water_polygon_gen4: {source: water_polygon_gen3, sql_filter: 'area>power(1222.99245256,2)',
+  water_polygon_gen4: {source: water_polygon_gen3, sql_filter: 'area>power(1222.9924525628205,2)',
     tolerance: 305.74811314070513}
-  water_polygon_gen5: {source: water_polygon_gen4, sql_filter: 'area>power(2445.98490513,2)',
+  water_polygon_gen5: {source: water_polygon_gen4, sql_filter: 'area>power(2445.984905125641,2)',
     tolerance: 611.4962262814103}
-  water_polygon_gen6: {source: water_polygon_gen5, sql_filter: 'area>power(4891.96981025,2)',
+  water_polygon_gen6: {source: water_polygon_gen5, sql_filter: 'area>power(4891.969810251282,2)',
     tolerance: 1222.9924525628205}
   waterway_linestring_gen1: {source: waterway_linestring, sql_filter: waterway IN
       ('river') AND ST_IsValid(geometry), tolerance: 76.43702828517628}
@@ -108,7 +134,7 @@ tables:
     - &id019 {key: service, name: service, type: string}
     - &id020 {key: usage, name: usage, type: string}
     mapping:
-      aerialway: [cable_car]
+      aerialway: [cable_car, gondola]
     type: linestring
   aerodrome_label_point:
     fields:
@@ -151,6 +177,37 @@ tables:
       aeroway: &id002 [aerodrome, heliport, runway, helipad, taxiway, apron]
       area:aeroway: *id002
     type: polygon
+  boundary_linestring:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geometry, type: geometry}
+    - {key: admin_level, name: admin_level, type: integer}
+    - {key: disputed, name: disputed, type: bool}
+    - {key: maritime, name: maritime, type: bool}
+    mapping:
+      boundary: [administrative]
+    type: linestring
+  boundary_relation:
+    fields:
+    - {name: osm_id, type: id}
+    - {key: admin_level, name: admin_level, type: integer}
+    - {key: name, name: name, type: string}
+    - {key: 'ISO3166-1:alpha2', name: iso3166_1_alpha2, type: string}
+    mapping:
+      boundary: [administrative]
+    relation_types: [boundary]
+    type: relation
+  boundary_relation_member:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: member, type: member_id}
+    - {name: index, type: member_index}
+    - {name: role, type: member_role}
+    - {name: type, type: member_type}
+    mapping:
+      __any__: [__any__]
+    relation_types: [boundary]
+    type: relation_member
   building_associatedstreet:
     fields:
     - {name: osm_id, type: id}
@@ -158,6 +215,8 @@ tables:
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
     - {from_member: true, key: building, name: building, type: string}
+    - {key: 'building:material', name: material, type: string}
+    - {key: 'building:colour', name: colour, type: string}
     - {from_member: true, key: 'building:part', name: buildingpart, type: string}
     - {from_member: true, key: 'building:height', name: buildingheight, type: string}
     - {from_member: true, key: height, name: height, type: string}
@@ -189,6 +248,8 @@ tables:
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
     - {from_member: true, key: building, name: building, type: string}
+    - {key: 'building:material', name: material, type: string}
+    - {key: 'building:colour', name: colour, type: string}
     - {from_member: true, key: 'building:part', name: buildingpart, type: string}
     - {from_member: true, key: 'building:height', name: buildingheight, type: string}
     - {from_member: true, key: height, name: height, type: string}
@@ -216,6 +277,8 @@ tables:
     - {name: geometry, type: validated_geometry}
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
+    - {key: 'building:material', name: material, type: string}
+    - {key: 'building:colour', name: colour, type: string}
     - {key: building, name: building, type: string}
     - {key: 'building:part', name: buildingpart, type: string}
     - {key: 'building:height', name: buildingheight, type: string}
@@ -243,6 +306,8 @@ tables:
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
     - {from_member: true, key: building, name: building, type: string}
+    - {key: 'building:material', name: material, type: string}
+    - {key: 'building:colour', name: colour, type: string}
     - {from_member: true, key: 'building:part', name: buildingpart, type: string}
     - {from_member: true, key: 'building:height', name: buildingheight, type: string}
     - {from_member: true, key: height, name: height, type: string}
@@ -274,6 +339,8 @@ tables:
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
     - {from_member: true, key: building, name: building, type: string}
+    - {key: 'building:material', name: material, type: string}
+    - {key: 'building:colour', name: colour, type: string}
     - {from_member: true, key: 'building:part', name: buildingpart, type: string}
     - {from_member: true, key: 'building:height', name: buildingheight, type: string}
     - {from_member: true, key: height, name: height, type: string}
@@ -354,8 +421,8 @@ tables:
     - {name: osm_id, type: id}
     - {name: geometry, type: geometry}
     - {key: highway, name: highway, type: string}
-    - &id025 {key: ref, name: ref, type: string}
-    - &id026 {key: network, name: network, type: string}
+    - &id038 {key: ref, name: ref, type: string}
+    - &id039 {key: network, name: network, type: string}
     - *id007
     - *id008
     - &id021 {key: level, name: level, type: integer}
@@ -375,6 +442,7 @@ tables:
     - *id020
     - &id023 {key: public_transport, name: public_transport, type: string}
     - &id024 {key: man_made, name: man_made, type: string}
+    - {key: surface, name: surface, type: string}
     mapping:
       highway: [motorway, motorway_link, trunk, trunk_link, primary, primary_link,
         secondary, secondary_link, tertiary, tertiary_link, unclassified, residential,
@@ -400,6 +468,17 @@ tables:
       man_made: [bridge, pier]
       public_transport: [platform]
     type: polygon
+  housenumber_point:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geometry, type: geometry}
+    - {key: 'addr:housenumber', name: housenumber, type: string}
+    type: geometry
+    type_mappings:
+      points:
+        addr:housenumber: [__any__]
+      polygons:
+        addr:housenumber: [__any__]
   island_point:
     fields:
     - {name: osm_id, type: id}
@@ -458,13 +537,15 @@ tables:
     - {key: amenity, name: amenity, type: string}
     - {key: leisure, name: leisure, type: string}
     - {key: tourism, name: tourism, type: string}
+    - {key: place, name: place, type: string}
     - {name: area, type: area}
     - {name: webmerc_area, type: webmerc_area}
     mapping:
       amenity: [bus_station, school, university, kindergarten, college, library, hospital]
       landuse: [railway, cemetery, military, residential, commercial, industrial,
         retail]
-      leisure: [stadium, pitch, playground]
+      leisure: [stadium, pitch, playground, track]
+      place: [suburb, neighbourhood]
       tourism: [theme_park, zoo]
     type: polygon
   marine_point:
@@ -477,6 +558,7 @@ tables:
     - {name: tags, type: hstore_tags}
     - {key: place, name: place, type: string}
     - {key: rank, name: rank, type: integer}
+    - {key: intermittent, name: is_intermittent, type: bool}
     filters:
       require:
         name: [__any__]
@@ -500,13 +582,126 @@ tables:
       boundary: [national_park]
       leisure: [nature_reserve]
     type: polygon
+  peak_point:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geometry, type: geometry}
+    - {key: name, name: name, type: string}
+    - {key: 'name:en', name: name_en, type: string}
+    - {key: 'name:de', name: name_de, type: string}
+    - {name: tags, type: hstore_tags}
+    - {key: ele, name: ele, type: string}
+    - {key: wikipedia, name: wikipedia, type: string}
+    mapping:
+      natural: [peak, volcano]
+    type: point
+  poi_point:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geometry, type: geometry}
+    - {key: name, name: name, type: string}
+    - {key: 'name:en', name: name_en, type: string}
+    - {key: 'name:de', name: name_de, type: string}
+    - {name: tags, type: hstore_tags}
+    - {name: subclass, type: mapping_value}
+    - {name: mapping_key, type: mapping_key}
+    - {key: station, name: station, type: string}
+    - {key: funicular, name: funicular, type: string}
+    - {key: information, name: information, type: string}
+    - {key: uic_ref, name: uic_ref, type: string}
+    - {key: religion, name: religion, type: string}
+    - {key: level, name: level, type: integer}
+    - {key: indoor, name: indoor, type: bool}
+    - {key: layer, name: layer, type: integer}
+    - {key: sport, name: sport, type: string}
+    mapping:
+      aerialway: &id025 [station]
+      amenity: &id026 [arts_centre, bank, bar, bbq, bicycle_parking, bicycle_rental,
+        biergarten, bus_station, cafe, cinema, clinic, college, community_centre,
+        courthouse, dentist, doctors, embassy, fast_food, ferry_terminal, fire_station,
+        food_court, fuel, grave_yard, hospital, ice_cream, kindergarten, library,
+        marketplace, motorcycle_parking, nightclub, nursing_home, parking, pharmacy,
+        place_of_worship, police, post_box, post_office, prison, pub, public_building,
+        recycling, restaurant, school, shelter, swimming_pool, taxi, telephone, theatre,
+        toilets, townhall, university, veterinary, waste_basket]
+      barrier: &id027 [bollard, border_control, cycle_barrier, gate, lift_gate, sally_port,
+        stile, toll_booth]
+      building: &id028 [dormitory]
+      highway: &id029 [bus_stop]
+      historic: &id030 [monument, castle, ruins]
+      landuse: &id031 [basin, brownfield, cemetery, reservoir, winter_sports]
+      leisure: &id032 [dog_park, escape_game, garden, golf_course, ice_rink, hackerspace,
+        marina, miniature_golf, park, pitch, playground, sports_centre, stadium, swimming_area,
+        swimming_pool, water_park]
+      railway: &id033 [halt, station, subway_entrance, train_station_entrance, tram_stop]
+      shop: &id034 [accessories, alcohol, antiques, art, bag, bakery, beauty, bed,
+        beverages, bicycle, books, boutique, butcher, camera, car, car_repair, carpet,
+        charity, chemist, chocolate, clothes, coffee, computer, confectionery, convenience,
+        copyshop, cosmetics, deli, delicatessen, department_store, doityourself, dry_cleaning,
+        electronics, erotic, fabric, florist, frozen_food, furniture, garden_centre,
+        general, gift, greengrocer, hairdresser, hardware, hearing_aids, hifi, ice_cream,
+        interior_decoration, jewelry, kiosk, lamps, laundry, mall, massage, mobile_phone,
+        motorcycle, music, musical_instrument, newsagent, optician, outdoor, perfume,
+        perfumery, pet, photo, second_hand, shoes, sports, stationery, supermarket,
+        tailor, tattoo, ticket, tobacco, toys, travel_agency, video, video_games,
+        watches, weapons, wholesale, wine]
+      sport: &id035 [american_football, archery, athletics, australian_football, badminton,
+        baseball, basketball, beachvolleyball, billiards, bmx, boules, bowls, boxing,
+        canadian_football, canoe, chess, climbing, climbing_adventure, cricket, cricket_nets,
+        croquet, curling, cycling, disc_golf, diving, dog_racing, equestrian, fatsal,
+        field_hockey, free_flying, gaelic_games, golf, gymnastics, handball, hockey,
+        horse_racing, horseshoes, ice_hockey, ice_stock, judo, karting, korfball,
+        long_jump, model_aerodrome, motocross, motor, multi, netball, orienteering,
+        paddle_tennis, paintball, paragliding, pelota, racquet, rc_car, rowing, rugby,
+        rugby_league, rugby_union, running, sailing, scuba_diving, shooting, shooting_range,
+        skateboard, skating, skiing, soccer, surfing, swimming, table_soccer, table_tennis,
+        team_handball, tennis, toboggan, volleyball, water_ski, yoga]
+      tourism: &id036 [alpine_hut, aquarium, artwork, attraction, bed_and_breakfast,
+        camp_site, caravan_site, chalet, gallery, guest_house, hostel, hotel, information,
+        motel, museum, picnic_site, theme_park, viewpoint, zoo]
+      waterway: &id037 [dock]
+    type: point
+  poi_polygon:
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geometry, type: geometry}
+    - {key: name, name: name, type: string}
+    - {key: 'name:en', name: name_en, type: string}
+    - {key: 'name:de', name: name_de, type: string}
+    - {name: tags, type: hstore_tags}
+    - {name: subclass, type: mapping_value}
+    - {name: mapping_key, type: mapping_key}
+    - {key: station, name: station, type: string}
+    - {key: funicular, name: funicular, type: string}
+    - {key: information, name: information, type: string}
+    - {key: uic_ref, name: uic_ref, type: string}
+    - {key: religion, name: religion, type: string}
+    - {key: level, name: level, type: integer}
+    - {key: indoor, name: indoor, type: bool}
+    - {key: layer, name: layer, type: integer}
+    - {key: sport, name: sport, type: string}
+    mapping:
+      aerialway: *id025
+      amenity: *id026
+      barrier: *id027
+      building: *id028
+      highway: *id029
+      historic: *id030
+      landuse: *id031
+      leisure: *id032
+      railway: *id033
+      shop: *id034
+      sport: *id035
+      tourism: *id036
+      waterway: *id037
+    type: polygon
   railway_linestring:
     fields:
     - {name: osm_id, type: id}
     - {name: geometry, type: geometry}
     - {key: railway, name: railway, type: string}
-    - *id025
-    - *id026
+    - *id038
+    - *id039
     - *id007
     - *id008
     - *id021
@@ -534,8 +729,8 @@ tables:
     - {name: member, type: member_id}
     - {name: role, type: member_role}
     - {name: type, type: member_type}
-    - *id025
-    - *id026
+    - *id038
+    - *id039
     - *id009
     mapping:
       route: [road]
@@ -594,6 +789,7 @@ tables:
     - {key: natural, name: natural, type: string}
     - {key: landuse, name: landuse, type: string}
     - {key: waterway, name: waterway, type: string}
+    - {key: intermittent, name: is_intermittent, type: bool}
     filters:
       reject:
         covered: ['yes']
@@ -613,12 +809,19 @@ tables:
     - {name: tags, type: hstore_tags}
     - {key: tunnel, name: is_tunnel, type: bool}
     - {key: bridge, name: is_bridge, type: bool}
+    - {key: intermittent, name: is_intermittent, type: bool}
     mapping:
       waterway: [stream, river, canal, drain, ditch]
     type: linestring
 tags:
-  include: ['name:br', 'name:ca', 'name:co', 'name:cs', 'name:de', 'name:en', 'name:eo',
-    'name:es', 'name:eu', 'name:fr', 'name:it', 'name:la', 'name:nl', 'name:oc', 'name:pl',
-    'name:pt', 'name:ru', int_name, loc_name, name, wikidata, wikipedia]
+  include: ['name:ar', 'name:az', 'name:be', 'name:bg', 'name:br', 'name:bs', 'name:ca',
+    'name:co', 'name:cs', 'name:cy', 'name:da', 'name:de', 'name:el', 'name:en', 'name:eo',
+    'name:es', 'name:et', 'name:eu', 'name:fi', 'name:fr', 'name:fy', 'name:ga', 'name:gd',
+    'name:he', 'name:hr', 'name:hu', 'name:hy', 'name:id', 'name:is', 'name:it', 'name:ja',
+    'name:ja_kana', 'name:ja_rm', 'name:ka', 'name:kk', 'name:kn', 'name:ko', 'name:ko_rm',
+    'name:la', 'name:lb', 'name:lt', 'name:lv', 'name:mk', 'name:mt', 'name:ml', 'name:nl',
+    'name:no', 'name:oc', 'name:pl', 'name:pt', 'name:rm', 'name:ro', 'name:ru', 'name:sk',
+    'name:sl', 'name:sq', 'name:sr', 'name:sr-Latn', 'name:sv', 'name:th', 'name:tr',
+    'name:uk', 'name:zh', int_name, loc_name, name, wikidata, wikipedia]
 
 use_single_id_space: true
