@@ -1065,8 +1065,8 @@ BEGIN
                 LOOP
                     EXECUTE 'UPDATE ' || quote_ident(boundary_gen_table.tablename) ||
                             E' SET country = ARRAY_APPEND(country, \'' || country_code.code ||
-                            E'\') WHERE osm_id IN (SELECT member FROM osm_boundary_relation_member WHERE osm_id = ' ||
-                            country_code.osm_id::text || ')';
+                            E'\') WHERE osm_id IN (SELECT -member FROM osm_boundary_relation_member WHERE osm_id = ' ||
+                            country_code.osm_id::text || ' AND type = 1)';
                 END LOOP;
         END LOOP;
 END
