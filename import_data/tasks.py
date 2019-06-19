@@ -206,7 +206,7 @@ def import_water_polygon(ctx):
     target_file = f"{ctx.data_dir}/water_polygons.shp"
     if not os.path.isfile(target_file):
         ctx.run(
-            f"wget --progress=dot:giga http://data.openstreetmapdata.com/water-polygons-split-3857.zip \
+            f"wget --progress=dot:giga https://osmdata.openstreetmap.de/download/water-polygons-split-3857.zip \
     && unzip -oj water-polygons-split-3857.zip -d {ctx.data_dir} \
     && rm water-polygons-split-3857.zip"
         )
@@ -266,7 +266,7 @@ def import_china_border(ctx):
     target_file = f"{ctx.data_dir}/china_boundary_linestring.geojson.gz"
     if not os.path.isfile(target_file):
         ctx.run(
-            f"wget --progress=dot:giga -P {ctx.data_dir} https://s3-ap-southeast-1.amazonaws.com/hyn.maptiles/china_boundary.geojson.gz \
+            f"wget --progress=dot:giga -P {ctx.data_dir} https://s3-ap-southeast-1.amazonaws.com/hyn.maptiles/china_boundary_linestring.geojson.gz \
     && gzip -d {ctx.data_dir}/china_boundary_linestring.geojson.gz"
         )
 
