@@ -48,9 +48,6 @@ IMPOSM_DATA_DIR="${IMPOSM_DATA_DIR:-/data/imposm}" # contains ./cache and ./diff
 # base tiles
 BASE_IMPOSM_CONFIG_FILENAME="config_base.json"
 
-# poi tiles
-POI_IMPOSM_CONFIG_FILENAME="config_poi.json"
-
 #tilerator
 FROM_ZOOM=11
 BEFORE_ZOOM=15 # exclusive
@@ -123,7 +120,7 @@ run_imposm_update() {
     log "apply changes on OSM database"
     log "${CHANGE_FILE} file size is $(ls -sh ${TMP_DIR}/${CHANGE_FILE} | cut -d' ' -f 1)"
 
-    if ! imposm3 diff -quiet -config $IMPOSM_CONFIG_FILE -connection $PG_CONNECTION_STRING \
+    if ! imposm3 diff -config $IMPOSM_CONFIG_FILE -connection $PG_CONNECTION_STRING \
         -mapping ${MAPPING_PATH} \
         -cachedir ${IMPOSM_DATA_DIR}/cache/${IMPOSM_FOLDER_NAME} \
         -diffdir ${IMPOSM_DATA_DIR}/diff/${IMPOSM_FOLDER_NAME} \
@@ -254,11 +251,9 @@ fi
 if [ -s ${TMP_DIR}/${CHANGE_FILE} ]; then
     # Imposm update for both tiles sources
     run_imposm_update $BASE_IMPOSM_CONFIG_FILENAME
-    run_imposm_update $POI_IMPOSM_CONFIG_FILENAME
 
     # Create tiles jobs for both tiles sources
     create_tiles_jobs $BASE_IMPOSM_CONFIG_FILENAME $BASE_TILERATOR_GENERATOR $BASE_TILERATOR_STORAGE
-    create_tiles_jobs $POI_IMPOSM_CONFIG_FILENAME $POI_TILERATOR_GENERATOR $POI_TILERATOR_STORAGE
 
     # Uncomment next line to enable lite tiles generation, using base database :
     # create_tiles_jobs $BASE_IMPOSM_CONFIG_FILENAME "ozgen-lite" "v2-lite"

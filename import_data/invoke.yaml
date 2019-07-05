@@ -34,9 +34,6 @@ tiles:
   ## zoom range [base_from_zoom, base_before_zoom[ to generate the base tiles
   base_from_zoom: 0
   base_before_zoom: 15
-  ## zoom range [poi_from_zoom, poi_before_zoom[ to generate the poi tiles
-  poi_from_zoom: 14
-  poi_before_zoom: 15
   ## number of parts to break each jobs into
   parts: 8
   ## url of tilerator API
@@ -45,9 +42,6 @@ tiles:
   base_sources:
     generator: substbasemap
     storage: basemap
-  poi_sources:
-    generator: gen_poi
-    storage: poi
 
 osm_update:
   replication_url: https://planet.osm.org/replication/day
