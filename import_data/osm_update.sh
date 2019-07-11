@@ -51,6 +51,7 @@ BASE_IMPOSM_CONFIG_FILENAME="config_base.json"
 #tilerator
 FROM_ZOOM=11
 BEFORE_ZOOM=15 # exclusive
+TILERATOR_EXPIREDTILES_DIR=/data/expiredtiles/
 
 START=$(date +%s)
 
@@ -142,7 +143,7 @@ create_tiles_jobs() {
 
     # we load all the tiles generated this day
     local EXPIRE_TILES_DIRECTORY=${OSMOSIS_WORKING_DIR}/expiretiles/${TILES_LAYER_NAME}
-    EXPIRE_TILES_FILE=$(concat_with_pipe $(find $EXPIRE_TILES_DIRECTORY -type f -newerct `date -d @$START -u -Iseconds`))
+    EXPIRE_TILES_FILE=$(concat_with_pipe $(find $EXPIRE_TILES_DIRECTORY -type f -name *.tiles -newerct `date -d @$START -u -Iseconds`))
 
     if [ -z "$EXPIRE_TILES_FILE" ]; then
         log "no expired tiles"
@@ -156,6 +157,13 @@ create_tiles_jobs() {
         INVOKE_OPTION="-f $INVOKE_CONFIG_FILE"
     fi
 
+    if ! invoke $INVOKE_OPTION upload-expired-tiles \
+        --expired-tiles $EXPIRE_TILES_FILE \
+        --dest-dir $TILERATOR_EXPIREDTILES_DIR | tee -a $LOG_FILE ; then
+        log_error "expired tile files upload failed"
+    fi
+    
+    EXPIRE_TILES_FILE=$(concat_with_pipe $(basename -a $(find $EXPIRE_TILES_DIRECTORY -type f -name '*.tiles' -newerct `date -d @$START -u -Iseconds`) | sed "s#^#$TILERATOR_EXPIREDTILES_DIR#"))
     invoke $INVOKE_OPTION generate-expired-tiles \
         --tiles-layer $TILES_LAYER_NAME \
         --from-zoom $FROM_ZOOM \

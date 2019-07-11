@@ -508,6 +508,21 @@ def generate_tiles(ctx):
 
 
 @task
+def upload_expired_tiles(ctx, expired_tiles, dest_dir):
+    logging.info("uploading expired tiles from %s", expired_tiles)
+    files = []
+    for expired_tile in expired_tiles.split('|'):
+        files.append(('tileFiles', open(expired_tile, 'rb')))
+
+    data = {'destDir': dest_dir}
+    url = f"{ctx.tiles.tilerator_url}/upload"
+    response = requests.post(url, files=files, data=data)
+    if response.status_code == 200:
+        logging.info("upload expired tiles successfully")
+    else:
+        raise Exception(response.json().error)
+
+@task
 def generate_expired_tiles(ctx, tiles_layer, from_zoom, before_zoom, expired_tiles):
     logging.info("generating expired tiles from %s", expired_tiles)
     create_tiles_jobs(
